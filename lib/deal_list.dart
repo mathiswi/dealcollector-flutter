@@ -12,7 +12,7 @@ class Deal {
   final String shop;
   final dynamic dealPrice;
   final dynamic regularPrice;
-  final String? basePrice;
+  final dynamic basePrice;
 
   Deal(
       {required this.name,
@@ -25,10 +25,10 @@ class Deal {
 
   factory Deal.fromJson(Map<String, dynamic> json) {
     return Deal(
-      name: json['name'],
-      description: json['description'],
-      imageUrl: json['imageUrl'],
-      shop: json['shop'],
+      name: json['name'] as String,
+      description: json['description'] as String,
+      imageUrl: json['imageUrl'] as String,
+      shop: json['shop'] as String,
       dealPrice: json['dealPrice'],
       regularPrice: json['regularPrice'],
       basePrice: json['basePrice'],
@@ -53,7 +53,6 @@ class _DealListState extends State<DealList> {
       final result = json.decode(utf8.decode(response.bodyBytes));
       Iterable list = result;
       final data = list.map((model) => Deal.fromJson(model)).toList();
-      print(data.length);
       setState(() {
         deals = data;
         filteredDeals = data;
@@ -63,36 +62,37 @@ class _DealListState extends State<DealList> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     fetchDeals();
   }
 
-  Future<bool> checkContain(str, cmp) async {
+  Future<bool> checkContain(String str, String cmp) async {
     return str.contains(cmp);
   }
 
-  searchDeals(String value) async {
+  Future<void> searchDeals(String value) async {
     final List<Deal> result = [];
     await Future.forEach(deals, (Deal entry) async {
       final name = entry.name.toLowerCase();
       final description = entry.description?.toLowerCase();
       final search = value.toLowerCase();
 
-      final List<String> stringList = []
-        ..addAll(name.split(' '))
-        ..addAll(description?.split(' ') ?? []);
-      ;
-      List<Future<bool>> futures = <Future<bool>>[];
+      final List<String> stringList = [
+        ...name.split(' '),
+        ...description?.split('') ?? []
+      ];
+      final List<Future<bool>> futures = <Future<bool>>[];
 
-      for (String str in stringList) {
+      for (final String str in stringList) {
         futures.add(checkContain(str, search));
       }
       final List<bool> matchesQuery = await Future.wait(futures);
       if (matchesQuery.contains(true)) result.add(entry);
     });
     setState(() {
-      this.query = value;
+      query = value;
       filteredDeals = result;
     });
     // final result = await deals.where((entry) async {
@@ -167,7 +167,7 @@ class _DealListState extends State<DealList> {
                       children: [
                         Image.network(
                           filteredDeals[index].imageUrl,
-                          scale: 1,
+                          // scale: 1,
                           height: 70,
                           width: 90,
                           fit: BoxFit.fitHeight,
@@ -184,8 +184,8 @@ class _DealListState extends State<DealList> {
                               ),
                               buildPriceText(filteredDeals[index].dealPrice,
                                   filteredDeals[index].regularPrice),
-                              Text(
-                                  "${filteredDeals[index].basePrice?.toString() ?? ""}"),
+                              Text(filteredDeals[index].basePrice?.toString() ??
+                                  ""),
                             ],
                           ),
                         )
