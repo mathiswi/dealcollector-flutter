@@ -10,8 +10,8 @@ class Deal {
   final String name;
   final String imageUrl;
   final String shop;
-  final double? dealPrice;
-  final double? regularPrice;
+  final dynamic dealPrice;
+  final dynamic regularPrice;
   final String? basePrice;
 
   Deal(
@@ -47,12 +47,13 @@ class _DealListState extends State<DealList> {
   String query = '';
 
   Future<void> fetchDeals() async {
-    final response = await http.get(Uri.https(
-        'r017129kll.execute-api.eu-central-1.amazonaws.com', 'prod/lidl'));
+    final response = await http.get(
+        Uri.https('r017129kll.execute-api.eu-central-1.amazonaws.com', 'prod'));
     if (response.statusCode == 200) {
       final result = json.decode(utf8.decode(response.bodyBytes));
       Iterable list = result;
       final data = list.map((model) => Deal.fromJson(model)).toList();
+      print(data.length);
       setState(() {
         deals = data;
         filteredDeals = data;
@@ -67,21 +68,56 @@ class _DealListState extends State<DealList> {
     fetchDeals();
   }
 
-  searchDeals(String value) {
-    final result = deals.where((entry) {
+  Future<bool> checkContain(str, cmp) async {
+    return str.contains(cmp);
+  }
+
+  searchDeals(String value) async {
+    final List<Deal> result = [];
+    await Future.forEach(deals, (Deal entry) async {
       final name = entry.name.toLowerCase();
       final description = entry.description?.toLowerCase();
       final search = value.toLowerCase();
-      if (description != null) {
-        return (name.contains(search) || description.contains(search));
-      } else {
-        return name.contains(search);
+
+      final List<String> stringList = []
+        ..addAll(name.split(' '))
+        ..addAll(description?.split(' ') ?? []);
+      ;
+      List<Future<bool>> futures = <Future<bool>>[];
+
+      for (String str in stringList) {
+        futures.add(checkContain(str, search));
       }
-    }).toList();
+      final List<bool> matchesQuery = await Future.wait(futures);
+      if (matchesQuery.contains(true)) result.add(entry);
+    });
     setState(() {
       this.query = value;
       filteredDeals = result;
     });
+    // final result = await deals.where((entry) async {
+    //   final name = entry.name.toLowerCase();
+    //   final description = entry.description?.toLowerCase();
+    //   final search = value.toLowerCase();
+
+    //   final List<String> stringList = name.split(' ');
+    //   List<Future> futures = <Future>[];
+
+    //   for (String str in stringList) {
+    //     futures.add(checkContains(str, search));
+    //   }
+    //   final result = await Future.wait(futures);
+
+    //   if (description != null) {
+    //     return (name.contains(search) || description.contains(search));
+    //   } else {
+    //     return name.contains(search);
+    //   }
+    // }).toList();
+    // setState(() {
+    //   this.query = value;
+    //   filteredDeals = result;
+    // });
   }
 
   Widget buildSearch() => SearchField(
@@ -90,7 +126,7 @@ class _DealListState extends State<DealList> {
         onChanged: searchDeals,
       );
 
-  Widget buildPriceText(double? dealPrice, double? regularPrice) {
+  Widget buildPriceText(dynamic dealPrice, dynamic regularPrice) {
     if (regularPrice == null) {
       return RichText(text: TextSpan(text: dealPrice.toString()));
     } else {
@@ -133,6 +169,8 @@ class _DealListState extends State<DealList> {
                           filteredDeals[index].imageUrl,
                           scale: 1,
                           height: 70,
+                          width: 90,
+                          fit: BoxFit.fitHeight,
                           cacheHeight: 355,
                         ),
                         Padding(padding: EdgeInsets.symmetric(horizontal: 6.0)),
