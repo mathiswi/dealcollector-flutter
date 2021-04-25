@@ -23,9 +23,9 @@ class _SearchFieldState extends State<SearchField> {
   Widget build(BuildContext context) {
     return Container(
       height: 42,
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      margin: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(6),
         border: Border.all(color: Colors.black26),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -36,11 +36,11 @@ class _SearchFieldState extends State<SearchField> {
           suffixIcon: widget.text.isNotEmpty
               ? GestureDetector(
                   child: Icon(Icons.close),
-                  // onTap: () {
-                  //   _controller.clear();
-                  //   widget.onChanged('');
-                  //   FocusScope.of(context).requestFocus(FocusNode());
-                  // },
+                  onTap: () {
+                    _controller.clear();
+                    widget.onChanged('');
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
                 )
               : null,
           hintText: widget.hintText,

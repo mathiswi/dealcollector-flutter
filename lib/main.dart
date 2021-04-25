@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:dealcollector/deal_list.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Main());
 }
 
-class MyApp extends StatelessWidget {
+class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
