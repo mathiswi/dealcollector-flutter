@@ -95,29 +95,6 @@ class _DealListState extends State<DealList> {
       query = value;
       filteredDeals = result;
     });
-    // final result = await deals.where((entry) async {
-    //   final name = entry.name.toLowerCase();
-    //   final description = entry.description?.toLowerCase();
-    //   final search = value.toLowerCase();
-
-    //   final List<String> stringList = name.split(' ');
-    //   List<Future> futures = <Future>[];
-
-    //   for (String str in stringList) {
-    //     futures.add(checkContains(str, search));
-    //   }
-    //   final result = await Future.wait(futures);
-
-    //   if (description != null) {
-    //     return (name.contains(search) || description.contains(search));
-    //   } else {
-    //     return name.contains(search);
-    //   }
-    // }).toList();
-    // setState(() {
-    //   this.query = value;
-    //   filteredDeals = result;
-    // });
   }
 
   Widget buildSearch() => SearchField(
@@ -186,6 +163,7 @@ class _DealListState extends State<DealList> {
                                   filteredDeals[index].regularPrice),
                               Text(filteredDeals[index].basePrice?.toString() ??
                                   ""),
+                              Text(filteredDeals[index].shop),
                             ],
                           ),
                         )
