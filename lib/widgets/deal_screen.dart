@@ -64,7 +64,7 @@ class _DealScreenState extends State<DealScreen> {
       body: SafeArea(
           child: DealList(
               deals: filteredDeals, scrollController: _scrollController)),
-      drawer: Sidebar(),
+      drawer: SafeArea(child: Sidebar()),
       appBar: AppBar(
         title: SearchField(
           text: query,
