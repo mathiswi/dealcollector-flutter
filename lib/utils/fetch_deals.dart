@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dealcollector/models/deal.dart';
 
 Future<List<Deal>> fetchDeals([String? shopName]) async {
+  print(shopName);
   final String path = shopName != null ? 'prod/${shopName}' : 'prod';
   final response = await http.get(
       Uri.https('r017129kll.execute-api.eu-central-1.amazonaws.com', path));
