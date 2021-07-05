@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dealcollector/deal_list.dart';
+import 'package:dealcollector/screens/home.dart';
 
 void main() {
   runApp(Main());
@@ -9,7 +9,7 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Home',
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
       home: HomePage(),
@@ -20,6 +20,6 @@ class Main extends StatelessWidget {
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DealList();
+    return Home();
   }
 }
