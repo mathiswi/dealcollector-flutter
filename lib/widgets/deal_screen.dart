@@ -23,9 +23,10 @@ class _DealScreenState extends State<DealScreen> {
   late List<Deal> deals = [];
   late List<Deal> filteredDeals = [];
   final ScrollController _scrollController = ScrollController();
+  final ApiProvider _apiProvider = new ApiProvider();
 
   Future<void> getDeals() async {
-    final List<Deal> data = await fetchDeals(widget.shopName);
+    final List<Deal> data = await _apiProvider.fetchData(widget.shopName);
     setState(() {
       deals = data;
       filteredDeals = data;

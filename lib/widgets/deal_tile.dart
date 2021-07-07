@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dealcollector/models/deal.dart';
 import 'package:dealcollector/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DealTile extends StatelessWidget {
   final Deal deal;
@@ -49,13 +51,23 @@ class DealTile extends StatelessWidget {
           children: [
             Padding(padding: EdgeInsets.symmetric(horizontal: 20.0)),
             Align(
-              alignment: Alignment.center,
-              child: Image.network(
-                deal.imageUrl,
-                height: 90,
-                cacheHeight: 355,
-              ),
-            ),
+                alignment: Alignment.center,
+                child: CachedNetworkImage(
+                  imageUrl: deal.imageUrl,
+                  height: 90,
+                  placeholder: (context, url) => SizedBox(
+                    width: 150.0,
+                    height: 100.0,
+                    child: Shimmer.fromColors(
+                        period: Duration(milliseconds: 1000),
+                        direction: ShimmerDirection.ltr,
+                        baseColor: Colors.grey.shade600,
+                        highlightColor: Colors.grey.shade500,
+                        child: Container(
+                          color: Colors.grey,
+                        )),
+                  ),
+                )),
             Flexible(
               fit: FlexFit.loose,
               child: Column(
