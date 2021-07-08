@@ -1,4 +1,4 @@
-import 'package:dealcollector/models/deal.dart';
+import '../../models/deal.dart';
 
 Future<bool> checkContain(String str, String cmp) async {
   return str.contains(cmp);

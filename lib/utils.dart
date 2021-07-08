@@ -1,9 +1,8 @@
 extension CapExtension on String {
   String get inCaps =>
-      this.length > 0 ? '${this[0].toUpperCase()}${this.substring(1)}' : '';
-  String get allInCaps => this.toUpperCase();
-  String get capitalizeFirstofEach => this
-      .replaceAll(RegExp(' +'), ' ')
+      length > 0 ? '${this[0].toUpperCase()}${substring(1)}' : '';
+  String get allInCaps => toUpperCase();
+  String get capitalizeFirstofEach => replaceAll(RegExp(' +'), ' ')
       .split(" ")
       .map((str) => str.inCaps)
       .join(" ");

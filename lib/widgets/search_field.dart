@@ -32,10 +32,10 @@ class _SearchFieldState extends State<SearchField> {
       child: TextField(
         controller: _controller,
         decoration: InputDecoration(
-          icon: Icon(Icons.search),
+          icon: const Icon(Icons.search),
           suffixIcon: widget.text.isNotEmpty
               ? GestureDetector(
-                  child: Icon(Icons.close),
+                  child: const Icon(Icons.close),
                   onTap: () {
                     _controller.clear();
                     widget.onChanged('');

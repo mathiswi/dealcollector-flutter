@@ -1,6 +1,6 @@
-import 'package:dealcollector/models/deal.dart';
-import 'package:dealcollector/widgets/deal_tile.dart';
 import 'package:flutter/material.dart';
+import '../../models/deal.dart';
+import '../../widgets/deal_tile.dart';
 
 class DealList extends StatelessWidget {
   final List<Deal> deals;

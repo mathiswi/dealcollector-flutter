@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:dealcollector/utils.dart';
+import '../../utils.dart';
 
 const List<String> shops = ['lidl', 'aldi', 'edeka', 'famila'];
 
@@ -14,8 +14,8 @@ class Sidebar extends StatelessWidget {
         children: <Widget>[
           Container(
             height: 80.0,
-            padding: EdgeInsets.all(16),
-            child: Align(
+            padding: const EdgeInsets.all(16),
+            child: const Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Dealcollector',
@@ -27,7 +27,7 @@ class Sidebar extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Home'),
+            title: const Text('Home'),
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
@@ -36,7 +36,7 @@ class Sidebar extends StatelessWidget {
             ListTile(
               title: Text(name.capitalizeFirstofEach),
               onTap: () {
-                Navigator.pushNamed(context, '/${name}');
+                Navigator.pushNamed(context, '/$name');
               },
             ),
         ],

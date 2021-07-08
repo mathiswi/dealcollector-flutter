@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dealcollector/widgets/deal_screen.dart';
+import '../../widgets/deal_screen.dart';
 
 void main() {
   runApp(Main());
@@ -15,17 +15,17 @@ class Main extends StatelessWidget {
         // home: Home(),
         initialRoute: '/',
         routes: {
-          '/': (context) => DealScreen(),
-          '/lidl': (context) => DealScreen(
+          '/': (context) => const DealScreen(),
+          '/lidl': (context) => const DealScreen(
                 shopName: 'lidl',
               ),
-          '/aldi': (context) => DealScreen(
+          '/aldi': (context) => const DealScreen(
                 shopName: 'aldi',
               ),
-          '/edeka': (context) => DealScreen(
+          '/edeka': (context) => const DealScreen(
                 shopName: 'edeka',
               ),
-          '/famila': (context) => DealScreen(
+          '/famila': (context) => const DealScreen(
                 shopName: 'famila',
               ),
         });
