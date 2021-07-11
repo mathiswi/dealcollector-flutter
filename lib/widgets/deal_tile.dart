@@ -56,6 +56,8 @@ class DealTile extends StatelessWidget {
                 child: CachedNetworkImage(
               imageUrl: deal.imageUrl,
               height: 90,
+              fadeInDuration: const Duration(milliseconds: 0),
+              fadeOutDuration: const Duration(milliseconds: 0),
               placeholder: (context, url) => SizedBox(
                 width: 150.0,
                 height: 100.0,

@@ -2,7 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../../utils.dart';
 
-const List<String> shops = ['lidl', 'aldi', 'edeka', 'famila'];
+class Route {
+  String name;
+  String route;
+
+  Route({
+    required this.name,
+    required this.route,
+  });
+}
+
+final List<Route> routes = [
+  Route(name: 'Home', route: '/'),
+  Route(name: 'Lidl', route: '/lidl'),
+  Route(name: 'Aldi', route: '/aldi'),
+  Route(name: 'Edeka', route: '/edeka'),
+  Route(name: 'Famila', route: '/famila'),
+];
 
 class Sidebar extends StatelessWidget {
   @override
@@ -26,17 +42,19 @@ class Sidebar extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            title: const Text('Home'),
-            onTap: () {
-              Navigator.pushNamed(context, '/');
-            },
-          ),
-          for (String name in shops)
+          for (Route entry in routes)
             ListTile(
-              title: Text(name.capitalizeFirstofEach),
+              title: Text(
+                entry.name.capitalizeFirstofEach,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color:
+                        (ModalRoute.of(context)?.settings.name == entry.route)
+                            ? Colors.blue.shade400
+                            : Colors.white),
+              ),
               onTap: () {
-                Navigator.pushNamed(context, '/$name');
+                Navigator.pushNamed(context, entry.route);
               },
             ),
         ],

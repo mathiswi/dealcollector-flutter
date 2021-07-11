@@ -14,7 +14,7 @@ class ApiProvider {
       final result = json.decode(utf8.decode(response.bodyBytes));
       final dynamic list = result;
       final List<Deal> data = list
-          .map((model) => Deal.fromJson(model as Map<String, dynamic>))
+          .map<Deal>((model) => Deal.fromJson(model as Map<String, dynamic>))
           .toList() as List<Deal>;
       return data;
     } else {
